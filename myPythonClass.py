@@ -28,8 +28,7 @@ class Message():
     def make_shift_dict(self,shift):
 
          def shifting(list,shift):
-             global myshift 
-             myshift=shift
+             
              newlist=[]
              for i in range(0,26):
                  if(i<26-shift):
