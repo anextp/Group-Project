@@ -56,9 +56,8 @@ class Message():
             #print(text)
         return text
             
-        
-a=Message("Hello")
-a.apply_shift(2)
+
+
 
 
 # This method applies a shift to all the lowercase and uppercase letters and saves the results in a dictionary.
@@ -114,13 +113,14 @@ An AnytextMessage object inherits from the Message class and has five attributes
 msg_txt, accepted_words, shift, encr_shift_dict [the dictionary of the shifted letters], enc_msg_txt (the final encrypted text saved as a string)
 '''
 class AnytextMessage(Message):
-    def __init__(self,text):
-        Message.__init__(self,text)
+    def __init__(self,text,shift):
+        self.msg_txt=text
+      #  Message.__init__(self,text)
        # super().__init__(text)
-        self.shift=myshift
-        self.encr_shift_dict=Message.make_shift_dict(self,myshift)
-        self.enc_msg_txt=Message.apply_shift(self,myshift)
-        
+        self.shift=shift
+        self.encr_shift_dict=Message.make_shift_dict(self,shift)
+        self.enc_msg_txt=Message.apply_shift(self,shift)
+        self.accepted_words=m.extract_words("words.txt")
     def get_shift(self):
         return self.shift
     
@@ -133,7 +133,8 @@ class AnytextMessage(Message):
         self.shift=newshift 
         pass
         
-a=AnytextMessage("Hello")
+a=AnytextMessage("Hello",2)
+print(a.apply_shift(2))
 print(a.get_shift())
 print(a.get_encr_dict())
 print(a.get_encr_msg())
@@ -171,7 +172,7 @@ Let msg_txt and accepted words be the attributes of this class.
 '''
 class CeasarsDecoder(Message):
     def __init__(self,text):
-        Message.__init__(self,text)
+        self.msg_txt=text
         self.accepted=m.extract_words("words.txt")
     def decrypt_message(self):
         txt=self.msg_txt
