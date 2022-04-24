@@ -187,7 +187,9 @@ class CeasarsDecoder(Message):
                 if(m.is_word(self.accepted,word)):
                     count+=1
             countlist.append(count)
-        return countlist
+            for k in range(0, len(countlist)):
+                if(countlist[k]==len(bestmsg)):
+                    return(k, msg.apply_shift(k))
         
 msg=CeasarsDecoder("Jgnnq? Jgnnq!")
 print(msg.decrypt_message())
