@@ -46,16 +46,19 @@ class Message():
        # print(shift_dict)
         text=self.msg_txt
         #print(text)
-        
-        for i in text:
-            if(i in string.ascii_letters):
-            #print(i)
-            #print(shift_dict[i])
-                text=text.replace(i,shift_dict[i])
-            #print(text)
-        return text
+        #text=text.split(" ")
+        text=list(text)
+        for i in range(0,len(text)):
+            if(text[i] in string.ascii_letters):
+                # print(text[i])
+                # print(shift_dict[text[i]])
+                text[i]=shift_dict[text[i]]
+            # #print(text)
+        return "".join(text)
             
-
+#k=Message("Alc hmh xli glmgoir gvsww xli vseh? Tpexs: Jsv xli kviexiv kssh. Oevp Qevb: Mx aew e lmwxsvmgep mrizmxefmpmxc. Rmixdwgli: Figeywi mj csy kedi xss psrk egvsww xli Vseh, xli Vseh kediw epws egvsww csy.")
+# print(k.make_shift_dict(22))
+#print(k.apply_shift(22))
 
 
 
@@ -63,9 +66,8 @@ class Message():
 # Note that shift is an integer and cannot be less than 0 or larger than 26. 
 # For example: 
 '''
-a = Message("Hello")
-print(a.make_shift_dict(2))
 
+print(a.make_shift_dict(2))
 Output: 
 {'a': 'c', 'b': 'd', 'c': 'e', 'd': 'f', 'e': 'g', 'f': 'h', 'g': 'i', 
 'h': 'j', 'i': 'k', 'j': 'l', 'k': 'm', 'l': 'n', 'm': 'o', 'n': 'p', 
@@ -75,13 +77,10 @@ Output:
 'H': 'J', 'I': 'K', 'J': 'L', 'K': 'M', 'L': 'N', 'M': 'O', 'N': 'P', 
 'O': 'Q', 'P': 'R', 'Q': 'S', 'R': 'T', 'S': 'U', 'T': 'V', 'U': 'W', 
 'V': 'X', 'W': 'Y', 'X': 'Z', 'Y': 'A', 'Z': 'B'}
-
 For each alphabet letter saved as a key, it associates its shifted letter based on the shift input you give.
 If the shift was 4, this dictionary wouldv'e been {'a': 'e', 'b': 'f', 'c': 'g', 'd': 'h', ...., 'X': 'B', 'Y': 'C', 'Z': 'D'}
 etc.
-
 Hint: In this function, you may use the string module's ascii_lowercase and ascii_uppercase letters.
-
 '''
 
 # Question 5: 
@@ -89,14 +88,11 @@ Hint: In this function, you may use the string module's ascii_lowercase and asci
 Create a method called apply_shift that takes the shift integer as an input. 
 Given a Message object or its children, this method applies the shift given to it as input to that object and return a string of the encrypted final value. 
 Note that shift is an integer and cannot be less than 0 or larger than 26. 
-
 Example:
 # a = Message("Hello")
 # print(a.apply_shift(2))
-
 Output: 
 "Jgnnq"
-
 Hint: In this function, you may use the output of the make_shift_dict function.
 '''
 
@@ -107,7 +103,6 @@ Hint: In this function, you may use the output of the make_shift_dict function.
 Create a child class of Message called: AnytextMessage.
 In the init function: 
 Initialize the AnytextMessage object with a text, which is a string and a shift, which is an integer. 
-
 An AnytextMessage object inherits from the Message class and has five attributes:
 msg_txt, accepted_words, shift, encr_shift_dict [the dictionary of the shifted letters], enc_msg_txt (the final encrypted text saved as a string)
 '''
@@ -132,13 +127,13 @@ class AnytextMessage(Message):
         self.shift=newshift 
         pass
         
-a=AnytextMessage("Hello",2)
-print(a.apply_shift(2))
-print(a.get_shift())
-print(a.get_encr_dict())
-print(a.get_encr_msg())
-a.change_shift(3)
-print(a.get_shift())
+
+# print(a.apply_shift(2))
+# print(a.get_shift())
+# print(a.get_encr_dict())
+# print(a.get_encr_msg())
+# a.change_shift(3)
+# print(a.get_shift())
 
     
 # Question 7:
@@ -176,7 +171,7 @@ class CeasarsDecoder(Message):
     def decrypt_message(self):
         txt=self.msg_txt
         msg=Message(txt)
-        
+        #print(msg.apply_shift(0))
         countlist=[]
         for i in range(0,26):
             bestmsg=msg.apply_shift(i)
@@ -187,11 +182,12 @@ class CeasarsDecoder(Message):
                 if(m.is_word(self.accepted,word)):
                     count+=1
             countlist.append(count)
-            for k in range(0, len(countlist)):
-                if(countlist[k]==len(bestmsg)):
-                    return(k, msg.apply_shift(k))
+        k=max(countlist)
+        for i in range(0,len(countlist)):
+            if(countlist[i]==k):
+                return(i, msg.apply_shift(i))
         
-msg=CeasarsDecoder("Jgnnq? Jgnnq!")
+msg=CeasarsDecoder("Alc hmh xli glmgoir gvsww xli vseh? Tpexs: Jsv xli kviexiv kssh. Oevp Qevb: Mx aew e lmwxsvmgep mrizmxefmpmxc. Rmixdwgli: Figeywi mj csy kedi xss psrk egvsww xli Vseh, xli Vseh kediw epws egvsww csy.")
 print(msg.decrypt_message())
 # Question 12: 
 '''
