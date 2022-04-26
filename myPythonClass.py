@@ -1,5 +1,5 @@
 import string
-import myPythonHelperModule as m
+from myPythonHelperModule import *
 
 ## Part 1: The Message object ##
 # Queston 1.
@@ -7,7 +7,7 @@ import myPythonHelperModule as m
 class Message():
     def __init__(self, text):
         self.msg_txt=text
-        self.accepted_words=m.extract_words("words.txt")
+        self.accepted_words=extract_words("words.txt")
 # Create the init function with self and text arguments to initialize the Message object. 
 # The text argument is a string and it is the text of the message to encrypt. 
 # The attributes of the Message object are msg_txt (a string) and accepted_words (a list coming from the extract_words function from the helper module.)
@@ -66,7 +66,6 @@ class Message():
 # Note that shift is an integer and cannot be less than 0 or larger than 26. 
 # For example: 
 '''
-
 print(a.make_shift_dict(2))
 Output: 
 {'a': 'c', 'b': 'd', 'c': 'e', 'd': 'f', 'e': 'g', 'f': 'h', 'g': 'i', 
@@ -114,7 +113,7 @@ class AnytextMessage(Message):
         self.shift=shift
         self.encr_shift_dict=Message.make_shift_dict(self,shift)
         self.enc_msg_txt=Message.apply_shift(self,shift)
-        self.accepted_words=m.extract_words("words.txt")
+        self.accepted_words=extract_words("words.txt")
     def get_shift(self):
         return self.shift
     
@@ -167,7 +166,7 @@ Let msg_txt and accepted words be the attributes of this class.
 class CeasarsDecoder(Message):
     def __init__(self,text):
         self.msg_txt=text
-        self.accepted=m.extract_words("words.txt")
+        self.accepted=extract_words("words.txt")
     def decrypt_message(self):
         txt=self.msg_txt
         msg=Message(txt)
@@ -179,7 +178,7 @@ class CeasarsDecoder(Message):
             count=0
             for word in bestmsg:
                 
-                if(m.is_word(self.accepted,word)):
+                if(is_word(self.accepted,word)):
                     count+=1
             countlist.append(count)
         k=max(countlist)
