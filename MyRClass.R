@@ -31,21 +31,21 @@ setMethod(
 
 setGeneric(
   "secret",
-  function(object, message, shift=0L) {
+  function(object, message) {
     standardGeneric("secret")
   }
 )
 setMethod(
   "secret","Person",
-  function(object, message, shift=0L) {
-    m <- AnytextMessage(message, shift)
+  function(object, message) {
+    m <- AnytextMessage(message, 4L)
     secret <- m$get_encr_msg()
     return(secret)
   }
 )
 setMethod(
   "secret","Employee",
-  function(object, message, shift=0L) {
+  function(object, message) {
     m <- CeasarsDecoder(message)
     sh <- as.integer(m$decrypt_message()[1])
     if(object@name=="John"){
@@ -73,13 +73,14 @@ john <- new("Employee",
             age=25,
             boss=boss,
             salary=1000)
-print(raise(john, percent=10))
+john@salary <- raise(john, percent=10)
+john
 ani <- new("Employee",
            name= "Ani",
            age=19,
            boss=boss,
            salary=1500)
-print(secret(boss, "Hello", 4L))
+print(secret(boss, "Hello"))
 print(secret(john, "Jgnnq"))
 print(secret(ani, "Jgnnq"))
 
